@@ -11,7 +11,7 @@ int main() {
     cin >> wires;
     int bird_count[wires];
 
-    // input the number of initial birds on each wire
+    // input the initial number of birds on each wire
     for (int i = 0; i < wires; i++)
         cin >> bird_count[i];
 
