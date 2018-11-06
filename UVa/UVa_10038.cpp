@@ -5,8 +5,6 @@ void vin(vector<int> &, int);
 bool is_jolly(vector<int> &);
 
 int main() {
-    // freopen("input.txt", "r", stdin);
-    // freopen("output.txt", "w", stdout);
 
     int n;
     while ( scanf("%d", &n) != EOF ) {
