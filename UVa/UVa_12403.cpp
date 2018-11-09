@@ -1,23 +1,23 @@
-#include <iostream>
-#include <string>
-
+#include <bits/stdc++.h>
 using namespace std;
 
 int main() {
-    int n, total = 0;
-    cin >> n;
 
-    while(n--) {
-        string task;
-        cin >> task;
+    int t, total = 0;
+    cin >> t;
+    
+    while(t--) {
+        string operation;
+        cin >> operation;
 
-        if (task == "donate") {
-            int toAdd;
-            cin >> toAdd;
-            total += toAdd;
-        } else if (task == "report") {
-            cout << total << endl;
+        if (operation == "donate") {
+            int ammount;
+            cin >> ammount;
+            total += ammount;
         }
+
+        else if (operation == "report")
+            cout << total << endl;
     }
 
     return 0;
