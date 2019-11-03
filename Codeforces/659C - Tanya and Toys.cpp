@@ -1,25 +1,34 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool taken[200200];
+int n, k;
+unordered_map<int, bool> mp;
+
 int main() {
-    int n, k;
+    ios::sync_with_stdio(false);
+
     cin >> n >> k;
     for (int i = 0; i < n; ++i) {
-        int p; cin >> p;
-        if (p <= 200000) taken[p] = 1;
+        int p;
+        cin >> p;
+        mp[p] = 1;
     }
 
+    
+    int i = 1;
     vector<int> res;
-    for (int i = 1; i <= 2e5; ++i) {
-        if (!taken[i] && k - i >= 0) {
-            res.push_back(i);
-            k -= i;
+    while( k >= i ) {
+        if ( mp.count(i) ) {
+            i++;
+            continue;
         }
+        res.push_back(i);
+        k -= i;
+        i++;
     }
 
-    cout << res.size() << endl;
+    cout << res.size() << '\n';
     for (auto el: res) cout << el << ' ';
-    cout << endl;
-    return 0;   
+    cout << '\n';
+    return 0;
 }

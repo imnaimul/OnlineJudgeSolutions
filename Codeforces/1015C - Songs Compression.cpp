@@ -2,32 +2,41 @@
 using ll = long long;
 using namespace std;
 
-ll n, sz, tcomp, tsz;
-pair<int, int> arr[100100];
+
+ll n, m;
+pair<ll, ll> arr[100100];
+
 
 int main() {
-    cin >> n >> sz;
-    for (int i = 1; i <= n; ++i) {
+    #ifdef __DEBUG
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif // __DEBUG
+
+    cin >> n >> m;
+
+    ll sum = 0, tot = 0;
+    for (int i = 0; i < n; ++i) {
         cin >> arr[i].first >> arr[i].second;
-        tcomp += arr[i].second;
-        tsz += arr[i].first;
+        sum += arr[i].second;
+        tot += arr[i].first;
     }
 
-    if ( tcomp > sz ) cout << "-1" << endl;
-    else if (tsz <= sz) cout << "0" << endl;
-    else {
-        sort( arr + 1, arr + n + 1, [](pair<int, int> a, pair<int, int> b) {
-            return a.first - a.second > b.first - b.second;
-        });
-
-        ll cnt = 0;
-        for (int i = 1; i <= n; ++i) {
-            tsz -= (arr[i].first - arr[i].second);
-            cnt ++;
-            if ( tsz <= sz ) break;
-        }
-        cout << cnt << endl;
+    if ( sum > m ) {
+        cout << -1 << endl;
+        return 0;
     }
 
+    sort(arr, arr + n, [](pair<ll, ll> a, pair<ll, ll> b) {
+         return a.first - a.second > b.first - b.second;
+    });
+
+    int i = 0, cnt = 0;
+    while( tot > m ) {
+        tot -= (arr[i].first - arr[i].second);
+        cnt++, ++i;
+    }
+
+    cout << cnt << endl;
     return 0;
 }

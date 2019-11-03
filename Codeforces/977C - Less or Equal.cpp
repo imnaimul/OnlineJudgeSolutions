@@ -1,29 +1,32 @@
-#include <bits/stdc++.h>    
+#include<bits/stdc++.h>
 using namespace std;
-
-int main(void) {
+ 
+int arr[200200];
+ 
+int main() {
     ios::sync_with_stdio(false);
-    #ifndef ONLINE_JUDGE
-    freopen("files/input.txt", "r", stdin);
-    freopen("files/output.txt", "w", stdout);
-    #endif
-
+ 
     int n, k;
     cin >> n >> k;
-    vector<int> list(n);
-    for (int i = 0; i < n; ++i) 
-        cin >> list[i];
-    
-    sort(list.begin(), list.end());
-    if (k == 0) {
-        if (list[0] == 1) cout << -1 << endl;
-        else cout << 1 << endl;
-    }
-        
-    else if ( k < list.size() && list[k] == list[k - 1] ) 
-        cout << -1 << endl;
-    else 
-        cout << list[k - 1] << endl;
+    for (int i = 1; i <= n; ++i) cin >> arr[i];
+    sort(arr + 1, arr + 1 + n);
+ 
+    int lo = 1, hi = 1e9;
 
+    while(lo <= hi) {
+        int mid = (lo + hi) / 2;
+        int itemsBefore = upper_bound(arr + 1, arr + 1 + n, mid) - arr;
+        itemsBefore--;
+
+        if (itemsBefore == k) {
+            cout << mid << endl;
+            return 0;
+        }
+
+        else if (itemsBefore < k) lo = mid + 1;
+        else hi = mid - 1;
+    }
+
+    cout << -1 << endl;
     return 0;
 }

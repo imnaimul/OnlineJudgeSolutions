@@ -1,31 +1,27 @@
-#include <iostream>
-#include <string>
-#include <vector>
-using namespace  std;
+#include <bits/stdc++.h>
+using ll = long long;
+using namespace std;
+
 
 int main() {
+
     int n;
-    string s;
-    cin >> n >> s;
+    string str;
+    cin >> n >> str;
     
-    vector<int> data;
-
-    for (int i = 0; i < s.length(); ++i) {
-        char ch = s[i];
-
-        if (ch == 'x') {
-            int j = i + 1;
-            while(s[j] == ch) j++;
-            data.push_back(j - i);
-            i += (j - i);
+    int i = 0, res = 0;
+    while( i < n ) {
+        if ( str[i] != 'x' ) {
+            i++;
+            continue;
         }
+
+        int j = i + 1;
+        while(j < n && str[j] == str[i]) j++;
+        if ( j - i > 2 ) res += (j - i) - 2;
+        i = j;
     }
 
-    int count = 0;
-    for ( auto it = data.begin(); it != data.end(); it++ )
-        if (*it > 2)
-            count += *it - 2;
-
-    cout << count << endl;
+    cout << res << endl;
     return 0;
-}
+} 

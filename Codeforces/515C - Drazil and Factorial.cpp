@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
-using ll = long long;
 using namespace std;
+
+string str, res;
 
 unordered_map<char, string> mp {
     {'2', "2"},
@@ -15,15 +16,11 @@ unordered_map<char, string> mp {
 
 int main() {
     int n;
-    string str;
     cin >> n >> str;
 
-    vector<int> res;
-    for (auto el: str)
-        for (auto x: mp[el]) res.push_back(x - '0');
-
+    for (auto el: str) if (el > '1') res += mp[el];
     sort(rbegin(res), rend(res));
-    for (auto el: res) cout << el;
-    cout << endl;
+
+    cout << res << endl;
     return 0;
 }

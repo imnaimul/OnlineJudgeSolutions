@@ -1,35 +1,22 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+string str;
+int q, st, ed, k;
+
 int main() {
-    ios::sync_with_stdio(false);
-    #ifndef ONLINE_JUDGE
-    freopen("files/input.txt", "r", stdin);
-    freopen("files/output.txt", "w", stdout);
-    #endif
+    cin >> str >> q;
 
-    string s;
-    cin >> s;
-    int q;
-    cin >> q;
-    while(q--) {
-        int l, r, k;
-        cin >> l >> r >> k;
+    while( q-- )  {
+        cin >> st >> ed >> k;
+        k = k % (ed - st + 1);
 
-        string temp = s.substr(l - 1, r - l + 1);
-        string res = temp;
-
-        for (int i = 0; i < (int) temp.length(); ++i)
-            res[ (i + k) % (int) temp.length() ] = temp[i];
-        
-        l--, r--;
-        int j = 0;
-        for ( int i = l; i <= r; ++i ) {
-            s[i] = res[j];
-            ++j;
-        }
+        string sub = "";
+        for (int i = st - 1; i < ed; ++i) sub += str[i];
+        rotate(sub.rbegin(), sub.rbegin() + k, sub.rend());
+        for (int i = st - 1, j = 0; i < ed; ++i, ++j) str[i] = sub[j];
     }
 
-    cout << s << endl;
+    cout << str << endl;
     return 0;
 }

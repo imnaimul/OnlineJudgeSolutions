@@ -1,28 +1,39 @@
 #include <bits/stdc++.h>
-using namespace std;
 using ll = long long;
+using namespace std;
 
-ll sum(ll n) { return (n * (n + 1)) / 2; }
+int freq[200];
+
+int nc2( int n ) {
+    int res = 1;
+    for (int i = 0, j = n; i < 2; ++i, --j) res *= j;
+    res /= 2;
+    return res;
+}
 
 int main() {
-    ios_base::sync_with_stdio(false);
+    #ifdef __DEBUG
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif // __DEBUG
+
     int n;
     cin >> n;
-    unordered_map<char, int> freq;
     while(n--) {
         string str;
         cin >> str;
-        freq[str[0]]++;
+        freq[ str[0] ]++;
     }
 
-    ll res = 0;
-    for (auto el: freq) {
-        if (el.second == 1) continue;
-        int one = el.second / 2 + el.second % 2, other = freq[el.first] - one;
-        res += sum(one - 1);
-        res += sum(other - 1);
+    int res = 0;
+    for (int i = 'a'; i <= 'z'; ++i) {
+        if (freq[i] < 2) continue;
+        res += nc2(freq[i] / 2);
+        res += nc2((freq[i] + 1) / 2);
     }
 
     cout << res << endl;
+
+
     return 0;
 }

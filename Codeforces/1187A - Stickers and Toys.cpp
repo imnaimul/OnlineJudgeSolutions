@@ -1,16 +1,16 @@
 #include <bits/stdc++.h>
+using ll = long long;
 using namespace std;
 
+int q, n, a, b;
 
 int main() {
-    int q;
     cin >> q;
-
     while(q--) {
         int n, a, b;
         cin >> n >> a >> b;
-        cout << max(n - a, n - b) + 1 << endl;
+        cout << max(n - a + 1, n - b + 1) << endl;
     }
-
-    return 0;
+    return 0;   
 }
+

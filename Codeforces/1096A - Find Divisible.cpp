@@ -1,15 +1,14 @@
-#include <iostream>
+#include<bits/stdc++.h>
 using namespace std;
-using ulli = unsigned long long int;
 
 int main() {
-    int t;
-    cin >> t;
-
-    while(t--) {
-        ulli l, r;
+    ios::sync_with_stdio(false);
+    int q;
+    cin >> q;
+    while(q--) {
+        int l, r;
         cin >> l >> r;
-        cout << l << " " << l * 2 << endl;
+        cout << l << ' ' << l * 2 << endl;
     }
     return 0;
 }

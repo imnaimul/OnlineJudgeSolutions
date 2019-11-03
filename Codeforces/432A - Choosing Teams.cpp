@@ -1,23 +1,20 @@
 #include <bits/stdc++.h>
+using ll = long long;
 using namespace std;
-
+ 
 int main() {
     ios::sync_with_stdio(false);
-    #ifndef ONLINE_JUDGE
-    freopen("files/input.txt", "r", stdin);
-    freopen("files/output.txt", "w", stdout);
-    #endif
 
-    int n, k, l, c;
-    cin >> n >> k;
+    int n, k;
+    scanf("%d %d", &n , &k);
 
-    l = 5 - k, c = 0;
+    int cnt = 0;
     for (int i = 0; i < n; ++i) {
-        int input;
-        cin >> input;
-        if (input <= l) c++;
+        int a;
+        scanf("%d", &a);
+        if (a <= 5 - k) cnt++;
     }
 
-    cout << c / 3 << endl;
+    cout << cnt / 3 << endl;
     return 0;
 }

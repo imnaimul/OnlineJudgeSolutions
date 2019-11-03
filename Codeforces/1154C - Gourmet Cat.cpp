@@ -1,53 +1,104 @@
 #include <bits/stdc++.h>
-#define len(str) (int) str.size()
-#define what_is(x) cout << #x << " : " << x << endl;
-#define ll long long
-#define tuple tuple<int, int, int> 
+using ll = long long;
 using namespace std;
 
-int a, b, c;
 
-tuple sol( ll n, ll start_day ) {
-    vector<string> arr {"Sat", "Sun", "Mon", "Tues", "Wed", "Thu", "Fri"};
-
-    ll a, b, c;
-    a = b = c = 0;
-    ll weeks = n / 7, left = n % 7;
-    a += weeks * 3;
-    b += weeks * 2;
-    c += weeks * 2;
-
-    // start day == 1 means saturday
-    rotate(arr.begin(), arr.begin() + start_day - 1, arr.end()); 
-    for (int i = 0; i < left; ++i) {
-        if (arr[i] == "Sun" || arr[i] == "Mon" || arr[i] == "Thu") a++;
-        else if (arr[i] == "Tues" || arr[i] == "Sat") b++;
-        else c++;
-    }
-
-    return {a, b, c};
-}
-
-bool possible( ll n ) {
-    for (int d = 1; d <= 7; ++d) {
-        tuple x = sol(n, d);
-        if (get<0>(x) <= a && get<1>(x) <= b && get<2>(x) <= c) return true;
-    }
-    return false;
-}
 
 int main() {
-    cin >> a >> b >> c;
+    #ifdef __DEBUG
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif // __DEBUG
 
-    ll lo = 0, hi = 3e9, mid, midval, res;
-    while(lo <= hi) {
-        mid = (lo + hi) / 2;
-        if ( possible(mid) ) {
-            res = mid;
-            lo = mid + 1;
-        } else hi = mid - 1;
+    ios::sync_with_stdio(false);
+
+    ll fish, rabbit, chicken;
+    cin >> fish >> rabbit >> chicken;
+
+    vector<string> days {"sat", "sun", "mon", "tue", "wed", "thu", "fri"};
+
+    ll fish_need = 0, rabbit_need = 0, chicken_need = 0;
+    for (auto el: days) {
+        if ( el =="sun" || el == "mon" || el == "thu" ) fish_need++;
+        else if ( el == "tue" || el == "sat") rabbit_need++;
+        else chicken_need++;
     }
 
-    cout << res << endl;
+    if ( fish < fish_need || rabbit < rabbit_need || chicken < chicken_need ) {
+        vector<string> days {"sat", "sun", "mon", "tue", "wed", "thu", "fri"};
+        ll a = fish, b = rabbit, c = chicken;
+
+        ll mx = 0;
+        for (int i = 0; i < 7; ++i) {
+            rotate(days.begin(), days.begin() + 1, end(days));
+
+
+            ll cnt = 0;
+            for (auto el: days) {
+                if ( el =="sun" || el == "mon" || el == "thu" ) {
+                        if (a == 0) break;
+                        a--;
+                }
+                else if ( el == "tue" || el == "sat") {
+                        if (b == 0) break;
+                        b--;
+                }
+                else {
+                        if (c == 0) break;
+                        c--;
+                }
+                cnt++;
+            }
+            a = fish, b = rabbit, c = chicken;
+            mx = max(cnt, mx);
+        }
+
+        cout << mx << endl;
+    } else {
+
+        ll lo = 0, hi = 1e9, total_week = 1;
+        while( lo <= hi ) {
+            ll mid = (hi + lo) / 2;
+            if ( fish_need * mid <= fish && rabbit_need * mid <= rabbit && chicken_need * mid <= chicken ) {
+                total_week = max(total_week, mid);
+                lo = mid + 1;
+            } else {
+                hi = mid - 1;
+            }
+        }
+
+        fish -= total_week * fish_need;
+        rabbit -= total_week * rabbit_need;
+        chicken -= total_week * chicken_need;
+
+        vector<string> days {"sat", "sun", "mon", "tue", "wed", "thu", "fri"};
+        ll a = fish, b = rabbit, c = chicken;
+
+        ll mx = 0;
+        for (int i = 0; i < 7; ++i) {
+            rotate(days.begin(), days.begin() + 1, end(days));
+            ll cnt = 0;
+            for (auto el: days) {
+                if ( el =="sun" || el == "mon" || el == "thu" ) {
+                        if (a == 0) break;
+                        a--;
+                }
+                else if ( el == "tue" || el == "sat") {
+                        if (b == 0) break;
+                        b--;
+                }
+                else {
+                        if (c == 0) break;
+                        c--;
+                }
+                cnt++;
+            }
+            a = fish, b = rabbit, c = chicken;
+            mx = max(cnt, mx);
+        }
+
+        cout << mx + total_week * 7  << endl;
+    }
+
     return 0;
 }

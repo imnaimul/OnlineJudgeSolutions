@@ -1,23 +1,24 @@
 #include <bits/stdc++.h>
-using namespace std;
 using ll = long long;
+using namespace std;
+
+ll arr[100100], cum[100100];
 
 int main() {
-    ios::sync_with_stdio(false);
     int n, k;
     cin >> n >> k;
-    vector<int> arr(n);
-    for (auto &el: arr) cin >> el;
 
-    int i = 0, sum = 0, j = 0, mx = 0;
-    while( i < n ) {
-        sum += arr[i];
-        while ( sum > k ) {
-            sum -= arr[j];
-            j++;
-        }
-        mx = max(i - j + 1, mx);
-        ++i;
+    for (int i = 1; i <= n; ++i) {
+        cin >> arr[i];
+        cum[i] = arr[i];
+    }
+
+    for (int i = 1; i <= n; ++i) cum[i] += cum[i - 1]; 
+
+    int mx = 0;
+    for (int i = 1; i <= n; ++i) {
+        int pos = upper_bound( cum + 1, cum + n + 1, cum[i - 1] + k) - cum;
+        mx = max( pos - i, mx);
     }
 
     cout << mx << endl;

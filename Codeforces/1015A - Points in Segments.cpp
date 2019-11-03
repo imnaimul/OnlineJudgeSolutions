@@ -1,31 +1,30 @@
-#include <iostream>
-#include <cstring>
-#include <vector>
+#include <bits/stdc++.h>
+using ll = long long;
 using namespace std;
 
+
+int marks[200];
+
 int main() {
-    ios::sync_with_stdio(false);
+    #ifdef __DEBUG
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif // __DEBUG
+
     int n, m;
     cin >> n >> m;
 
-    bool marks[m + 1];
-    memset(marks, false, m + 1);
-
-    while(n--) {
-        int l, r, i;
-        cin >> l >> r, i = l;
-        while( i <= r ) marks[i] = true, i++;
+    for (int i = 0; i < n; ++i) {
+        int l, r;
+        cin >> l >> r;
+        for (int j = l; j <= r; ++j) marks[j] = 1;
     }
 
-    vector<int> result;
-    for (int i = 1; i <= m; ++i)
-        if ( !marks[i] )
-            result.push_back( i );
-
-
-    cout << result.size() << endl;
-    for (int i = 0; i < result.size(); ++i)
-        cout << result[i] << " ";
+    vector<int> res;
+    for (int i = 1; i <= m; ++i) if (!marks[i]) res.push_back(i);
+    cout << res.size() << endl ;
+    for (auto el: res) cout << el << ' ';
     cout << endl;
+
     return 0;
 }

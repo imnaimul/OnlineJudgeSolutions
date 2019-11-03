@@ -1,43 +1,48 @@
-#include <bits/stdc++.h>    
+#include<bits/stdc++.h>
+using ll = long long;
 using namespace std;
-using ulli = unsigned long long int;
 
-int main(void) {
-    ios::sync_with_stdio(false);
-    #ifndef ONLINE_JUDGE
-    freopen("files/input.txt", "r", stdin);
-    freopen("files/output.txt", "w", stdout);
-    #endif
-    ulli n;
-    cin >> n;
+ll arr[110];
+map<ll, vector<ll>> edges;
+map<ll, bool> vis, exists;
 
-    ulli arr[n];
-    for (int i = 0; i < n; ++i) cin >> arr[i];
-    sort(arr, arr + n);
+vector<ll> res;
 
-    for (int i = 0; i < n; ++i) {
-        ulli elem = arr[i];
-        vector<ulli> list;
-        list.push_back(elem);
+void dfs( ll x ) {
+    if (vis[x] == 1) return;
+    vis[x] = 1;
 
-        while(true) {
-            if ( elem % 3 == 0 && binary_search(arr, arr + n, elem / 3) )     
-                list.push_back(elem / 3), 
-                elem = elem / 3;
-
-            else if ( binary_search(arr, arr + n, elem * 2) )
-                list.push_back(elem * 2), 
-                elem = elem * 2;
-
-            else break;
-        }
-
-        if (list.size() == n) {
-            for (auto el: list) cout << el << " ";
-            cout << endl;
-            break;
+    res.push_back(x);
+    for (auto el: edges[x]) {
+        if ( exists[el] == 1 && vis[el] == 0 ) {
+            dfs(el);
         }
     }
+}
 
+int main() {
+    ios::sync_with_stdio(false);
+    int n;
+    cin >> n;
+    
+    for (int i = 1; i <= n; ++i) {
+        cin >> arr[i];
+        exists[arr[i]] = 1;
+        edges[ arr[i] ].push_back(arr[i] * 2);
+        if ( arr[i] % 3 == 0 ) edges[ arr[i] ].push_back(arr[i] / 3);
+    }
+
+    for (int i = 1; i <= n; ++i) {
+        vis.clear();
+        res.clear();
+        dfs(arr[i]);
+
+        if (res.size() == n) {
+            for (auto el: res) cout << el << ' ';
+            cout << endl;
+            return 0;
+        }
+    }
+    
     return 0;
 }

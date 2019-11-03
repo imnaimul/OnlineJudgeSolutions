@@ -1,26 +1,24 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main() {
-    int usb_count, file_size;
-    cin >> usb_count >> file_size;
+int arr[110];
 
-    int usb_sizes[usb_count];
-    for (int i = 0; i < usb_count; ++i)
-        cin >> usb_sizes[i];
+int main() {    
+    int n, m;
+    cin >> n >> m;
+    for (int i = 0; i < n; ++i) cin >> arr[i];
 
-    sort(usb_sizes, usb_sizes + usb_count, [](int a, int b) {
-        return a > b;
-    });
+    sort(arr, arr + n);
+    reverse(arr, arr + n);
 
-    int sum = 0, i = 0;
-    while( sum < file_size ) {
-        sum += usb_sizes[i];
-        i++;
+    int i = 0, cnt = 0, taken = 0;
+    while( i < n ) {
+        taken += arr[i];
+        cnt++;
+        if (taken >= m) break;
+        ++i;
     }
 
-    if (sum - usb_sizes[i - 1] > sum) i--;
-
-    cout << i << endl;
+    cout << cnt << endl;
     return 0;
 }

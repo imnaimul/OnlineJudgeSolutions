@@ -1,25 +1,50 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
+int arr[2000];
+
+
+void process(deque<int> &start, deque<int> &other) {
+    int curr = 1;
+    while( 1 ) {
+        if (curr & 1) {
+            if (start.size() == 0) break;
+            start.pop_front();
+        }
+        else {
+            if (other.size() == 0) break;
+            other.pop_front();
+        }
+        curr++;
+    }
+}
+
 int main() {
-    ios::sync_with_stdio(false);
+    #ifdef __DEBUG
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif // __DEBUG
+
     int n;
     cin >> n;
-    int od = 0, ev = 0;
-    vector<int> odd, even;
+
+    deque<int> odd, even;
     for (int i = 0; i < n; ++i) {
-        int p; cin >> p;
-        if (p & 1) odd.push_back(p), od++;
-        else even.push_back(p), ev++;
+        cin >> arr[i];
+        if (arr[i] & 1) odd.push_back(arr[i]);
+        else even.push_back(arr[i]);
     }
 
-    sort(begin(odd), end(odd), greater<int>());
-    sort(begin(even), end(even), greater<int>());
+    sort(odd.rbegin(), odd.rend());
+    sort(even.rbegin(), even.rend());
 
-    if (ev == od || od == ev - 1 || ev == od - 1) cout << 0 << endl;
-    else if ( ev == 0 ) cout << accumulate(odd.begin() + 1, odd.end(), 0LL) << endl;
-    else if ( od == 0 ) cout << accumulate(even.begin() + 1, even.end(), 0LL) << endl;
-    else if ( ev > od ) cout << accumulate(even.begin() + (od + 1), even.end(), 0LL) << endl;
-    else if ( od > ev ) cout << accumulate(odd.begin() + (ev + 1), odd.end(), 0LL) << endl;
+    if ( odd.size() > even.size() ) process(odd, even);
+    else process(even, odd);
+
+    int res = 0;
+    for (auto el: odd) res += el;
+    for (auto el: even) res += el;
+
+    cout << res << endl;
     return 0;
 }

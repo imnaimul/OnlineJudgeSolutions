@@ -1,25 +1,30 @@
-#include <iostream>
-#include <map>
-#include <string>
+#include <bits/stdc++.h>
+using ll = long long;
 using namespace std;
 
+unordered_map<string, int> mp;
+
 int main() {
+    
     ios::sync_with_stdio(false);
+
     int n;
     cin >> n;
+    while( n-- ) {
+        string str;
+        cin >> str;
 
-    string user;
-    map<string, int> freq;
-    for (int i = 0; i < n; ++i) {
-        cin >> user;
-        if ( !freq.count(user) ) 
-            cout << "OK" << endl,
-            freq.insert({user, 1});
-
-        else 
-            freq[user]++,
-            cout << user << freq[user] - 1 << endl;
+        if ( !mp.count(str) ) {
+            cout << "OK" << endl;
+            mp[str] = 1;
+        } else {
+            string res = str + to_string(mp[str]);
+            cout << res << endl;
+            mp[str]++;
+            mp[res] = 1;
+        }
     }
 
     return 0;
 }
+

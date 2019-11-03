@@ -1,24 +1,19 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main() {
-    ios::sync_with_stdio(false);
-    #ifndef ONLINE_JUDGE
-    freopen("files/input.txt", "r", stdin);
-    freopen("files/output.txt", "w", stdout);
-    #endif
+int n, m, k;
+int arr[200200];
 
-    int n, m;
+int main() {    
+
     cin >> n >> m;
-    vector<int> arr(n);
-    for (int i = 0; i < n; ++i) cin >> arr.at(i);
-    sort( arr.begin(), arr.end() );
+    for (int i = 0; i < n; ++i) cin >> arr[i];
+    sort(arr, arr + n);
 
     while(m--) {
-        int p; cin >> p;
-        auto it = upper_bound(arr.begin(), arr.end(), p);
-        cout << it - arr.begin() << " ";
+        cin >> k;
+        cout << upper_bound(arr, arr + n, k) - arr << ' ';
     }
-    cout << endl;
+
     return 0;
 }

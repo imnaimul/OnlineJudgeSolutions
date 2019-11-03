@@ -1,25 +1,43 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-bool is_diverse(string str) {
-    int l = str.length();
-    sort(str.begin(), str.end());
-    for (int i = 0; i < l - 1; ++i)
-        if (str[i + 1] - str[i] != 1) 
-            return false;
-    return true;
-}
-
 int main() {
-    ios::sync_with_stdio(false);
-    int n;
-    cin >> n;
-    while(n--) {
-        string word;
-        cin >> word;
+    #ifdef __DEBUG
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif // __DEBUG
 
-        if ( is_diverse(word) ) cout << "YES" << endl;
-        else cout << "NO" << endl;
+    int q;
+    cin >> q;
+    while(q--) {
+        string str;
+        cin >> str;
+
+        int freq[26];
+        memset(freq, 0, sizeof(freq));
+
+        bool flag = true;
+        for (int i = 0; i < str.size(); ++i) freq[ str[i] - 'a' ]++;
+        for (int i = 0; i < 26; ++i) if (freq[i] > 1) { flag = false ; break; }
+
+        if (!flag) {
+            cout << "no" << endl;
+            continue;
+        }
+
+        vector<int> pos;
+        for (int i = 0; i < 26; ++i)
+            if (freq[i]) pos.push_back(i);
+
+        for (int i = 0; i < pos.size() - 1; ++i)
+            if (pos[i + 1] - pos[i] != 1) {
+                flag = false;
+                break;
+            }
+
+        if (flag) cout << "yes" << endl;
+        else cout << "no" << endl;
     }
+
     return 0;
 }

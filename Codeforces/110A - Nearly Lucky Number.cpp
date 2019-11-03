@@ -1,33 +1,17 @@
-#include <iostream>
-#include <string>
-
+#include <bits/stdc++.h>
+using ll = long long;
 using namespace std;
-bool is_almost_lucky(const string &);
 
 int main() {
-    string n;
-    cin >> n;
+    ios::sync_with_stdio(false);
+    string str;
+    cin >> str;
 
-    if (is_almost_lucky(n)) 
-        cout << "YES" << endl;
-    else 
-        cout << "NO" << endl;
-}
-
-
-bool is_almost_lucky(const string &n) {
-    int lucky_digit_count = 0;
+    int cnt = count_if(str.begin(), str.end(), [](char a) {
+        return a == '4' || a == '7';
+    });
     
-    for (char ch: n) {
-        if (ch == '4' || ch == '7')
-            lucky_digit_count++;
-    }
-
-    string str = to_string(lucky_digit_count);
-
-    for (char ch: str)
-        if (ch != '4' && ch != '7')
-            return false;
-
-    return true;
+    if (cnt == 4 || cnt == 7) cout << "YES" << endl;
+    else cout << "NO" << endl;
+    return 0;
 }
